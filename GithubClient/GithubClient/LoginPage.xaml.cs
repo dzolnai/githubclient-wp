@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using GithubClient.Utils;
 
 namespace GithubClient
 {
@@ -26,7 +27,7 @@ namespace GithubClient
         private async void Login_Button_Click(object sender, RoutedEventArgs e)
         {
             string userEmail = email.Text;
-            string userPassword = password.Text;
+            string userPassword = password.Password;
 
             if (userEmail.Length == 0 || userPassword.Length == 0)
             {
@@ -37,7 +38,7 @@ namespace GithubClient
             progress.Visibility = System.Windows.Visibility.Visible;
 
             // set the HTTP request header from the details
-            HttpClient httpClient = Utils.GetHttpClient();
+            HttpClient httpClient = GitHubHttp.GetHttpClient();
             httpClient.DefaultRequestHeaders.Authorization = 
                 new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(String.Format("{0}:{1}", userEmail, userPassword))));
 
@@ -52,7 +53,8 @@ namespace GithubClient
                     string content = await response.Content.ReadAsStringAsync();
                     List<Repository> repositories = JsonConvert.DeserializeObject<List<Repository>>(content);
                     Debugger.Log(0, "JSON", "Serialized " + repositories.Count + " repositories.");
-                    // TODO send to the main page.
+                    NavigationHelper.setNavigationData(repositories, GithubClient.Utils.NavigationHelper.DataType.REPOSITORY_LIST);
+                    NavigationService.Navigate(new Uri("/RepositoryPage.xaml", UriKind.Relative));
                 }
                 else
                 {
@@ -67,6 +69,11 @@ namespace GithubClient
                 Debugger.Log(2, "Http", ex.Message);
             }
             progress.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void Offline_Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/RepositoryPage.xaml", UriKind.Relative));
         }
     }
 }

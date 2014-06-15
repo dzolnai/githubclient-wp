@@ -1,0 +1,67 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="GithubClient.RepositoryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    x:Name="AppRepositoryPage">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <phone:Pivot Title="REPOSITORIES">
+            <!--Pivot item one-->
+            <phone:PivotItem Header="Online">
+                <Grid>
+                    <ListBox x:Name="Repositories" Grid.Row="1" SelectionChanged="Repository_Selected"
+                             ItemsSource="{Binding ElementName=AppRepositoryPage, Path=Data}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Image Margin="8" Source="/Assets/Icons/repository.png"
+                                           Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+                                    <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center" FontSize="36"
+                                               HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1"
+                                               TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Path=Owner}" VerticalAlignment="Center" 
+                                               HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1"
+                                               Foreground="Gray"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        
+                    </ListBox>
+                    <TextBlock x:Name="NoOnlineItemsText" Text="You are working in offline mode, or you don't have any repositories." VerticalAlignment="Center" HorizontalAlignment="Center" 
+                               FontSize="26" TextWrapping="Wrap" Foreground="Gray" Visibility="Collapsed" TextAlignment="Center" Margin="8"/>
+                </Grid>
+                
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem Header="Offline">
+                <Grid>
+                    <TextBlock x:Name="NoOfflineItemsText" Text="No saved repositories available." VerticalAlignment="Center" HorizontalAlignment="Center" 
+                               FontSize="26" TextWrapping="Wrap" Foreground="Gray" Visibility="Visible"/>
+                </Grid>
+            </phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+    
+</phone:PhoneApplicationPage>

@@ -52,10 +52,11 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <ProgressBar Grid.Row="0" Visibility="Collapsed" x:Name="progress" IsIndeterminate="True"/>
-            <Image x:Name="logo" Source="Assets/GitHubLogo.png" VerticalAlignment="Top" Width="300" Grid.Row="1"/>
+            <Image x:Name="logo" Source="Assets/GitHubLogo.png" VerticalAlignment="Top" Width="250" Grid.Row="1"/>
             <Grid Grid.Row="2" Margin="16,0,16,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -71,10 +72,11 @@
                 <TextBox x:Name="email" Grid.Row="0" Grid.Column="1"/>
 
                 <TextBlock Text="password" Grid.Row="1" Grid.Column="0" FontSize="32" VerticalAlignment="Center"/>
-                <TextBox x:Name="password" Grid.Row="1" Grid.Column="1"/>
+                <PasswordBox  x:Name="password" Grid.Row="1" Grid.Column="1"/>
             </Grid>
             
-            <Button Grid.Row="3" Content="log in" Height="92" Margin="0,16,0,0" Click="Login_Button_Click"/>
+            <Button Grid.Row="3" Content="log in" Height="80" Margin="0,16,0,0" Click="Login_Button_Click"/>
+            <Button Grid.Row="4" Content="offline mode" Height="80" Margin="0,0,0,0" Click="Offline_Button_Click"/>
             
 
         </Grid>

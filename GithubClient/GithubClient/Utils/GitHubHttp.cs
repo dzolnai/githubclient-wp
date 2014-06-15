@@ -5,9 +5,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GithubClient
+namespace GithubClient.Utils
 {
-    public static class Utils
+    public static class GitHubHttp
     {
         private static HttpClient httpClient;
 
