@@ -50,9 +50,10 @@ namespace GithubClient
             if (Parents.Count > 1)
             {
                 var goUp = new File();
+                bool isLightTheme = (Visibility)Application.Current.Resources["PhoneLightThemeVisibility"] == Visibility.Visible;
                 goUp.Url = Parents.ElementAt(Parents.Count - 1);
                 goUp.Name = "Up one directory...";
-                goUp.Icon = "/Assets/Icons/up.png";
+                goUp.Icon = isLightTheme ? "/Assets/Icons/up-light.png" : "/Assets/Icons/up-dark.png";
                 goUp.Type = "UP";
                 CurrentItems.Add(goUp);
             }

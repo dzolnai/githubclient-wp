@@ -56,7 +56,8 @@
             </Grid.RowDefinitions>
 
             <ProgressBar Grid.Row="0" Visibility="Collapsed" x:Name="progress" IsIndeterminate="True"/>
-            <Image x:Name="logo" Source="Assets/GitHubLogo.png" VerticalAlignment="Top" Width="250" Grid.Row="1"/>
+            <Image Source="Assets/logo-light.png" VerticalAlignment="Top" Width="250" Grid.Row="1"  Visibility="{StaticResource PhoneLightThemeVisibility}"/>
+            <Image Source="Assets/logo-dark.png" VerticalAlignment="Top" Width="250" Grid.Row="1"  Visibility="{StaticResource PhoneDarkThemeVisibility}"/>
             <Grid Grid.Row="2" Margin="16,0,16,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

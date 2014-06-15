@@ -159,12 +159,17 @@
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\GitHubLogo.png" />
-    <Content Include="Assets\Icons\directory.png" />
-    <Content Include="Assets\Icons\file.png" />
-    <Content Include="Assets\Icons\repository.png" />
+    <Content Include="Assets\Icons\directory-dark.png" />
+    <Content Include="Assets\Icons\directory-light.png" />
+    <Content Include="Assets\Icons\file-dark.png" />
+    <Content Include="Assets\Icons\file-light.png" />
+    <Content Include="Assets\Icons\repository-dark.png" />
+    <Content Include="Assets\Icons\repository-light.png" />
     <Content Include="Assets\Icons\save.png" />
-    <Content Include="Assets\Icons\up.png" />
+    <Content Include="Assets\Icons\up-dark.png" />
+    <Content Include="Assets\Icons\up-light.png" />
+    <Content Include="Assets\logo-dark.png" />
+    <Content Include="Assets\logo-light.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

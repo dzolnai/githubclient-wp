@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Windows;
 
 public class FileConverter : JsonConverter
 {
@@ -18,13 +19,14 @@ public class FileConverter : JsonConverter
         file.Name = (string)jObject["name"];
         file.Type = (string)jObject["type"];
         // icon depends on type
+        bool isLightTheme = (Visibility)Application.Current.Resources["PhoneLightThemeVisibility"] == Visibility.Visible;
         if (file.Type.Equals("dir"))
         {
-            file.Icon = "/Assets/Icons/directory.png";
+            file.Icon = isLightTheme ? "/Assets/Icons/directory-light.png" : "/Assets/Icons/directory-dark.png";
         }
         else
         {
-            file.Icon = "/Assets/Icons/file.png";
+            file.Icon = isLightTheme ? "/Assets/Icons/file-light.png" : "/Assets/Icons/file-dark.png";
         }
         return file;
     }

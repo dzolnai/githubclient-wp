@@ -34,8 +34,10 @@
                                         <ColumnDefinition Width="80"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    
-                                    <Image Margin="8" Source="/Assets/Icons/repository.png"
+
+                                    <Image Margin="8" Source="/Assets/Icons/repository-light.png" Visibility="{StaticResource PhoneLightThemeVisibility}"
+                                           Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+                                    <Image Margin="8" Source="/Assets/Icons/repository-dark.png" Visibility="{StaticResource PhoneDarkThemeVisibility}"
                                            Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
                                     <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center" FontSize="36"
                                                HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1"
@@ -67,8 +69,10 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Margin="8" Source="/Assets/Icons/repository.png"
-                                            Grid.Column="0"/>
+                                    <Image Margin="8" Source="/Assets/Icons/repository-light.png" Visibility="{StaticResource PhoneLightThemeVisibility}"
+                                           Grid.Column="0"/>
+                                    <Image Margin="8" Source="/Assets/Icons/repository-dark.png" Visibility="{StaticResource PhoneDarkThemeVisibility}"
+                                           Grid.Column="0"/>
                                     <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center" FontSize="36"
                                                HorizontalAlignment="Left" Grid.Column="1"
                                                TextWrapping="Wrap"/>
