@@ -1,20 +1,21 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GithubClient.Entity
 {
-    [JsonConverter(typeof(FileConverter))]
-    public class File : INotifyPropertyChanged
+    [DataContract] 
+    public class DownloadedFile : INotifyPropertyChanged
     {
         private string name;
-        private string url;
+        private string url;   
+        private string content;
         private string type;
-        private string icon;
+        private List<string> containsFiles;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,7 +27,7 @@ namespace GithubClient.Entity
             }
         }
 
-        [JsonProperty("name")]
+        [DataMember]
         public string Name
         {
             get
@@ -35,7 +36,7 @@ namespace GithubClient.Entity
             }
             set
             {
-                if (name != value)
+                if (value != name)
                 {
                     name = value;
                     NotifyPropertyChanged("Name");
@@ -43,7 +44,7 @@ namespace GithubClient.Entity
             }
         }
 
-        [JsonProperty("url")]
+        [DataMember]
         public string Url
         {
             get
@@ -52,7 +53,7 @@ namespace GithubClient.Entity
             }
             set
             {
-                if (url != value)
+                if (value != url)
                 {
                     url = value;
                     NotifyPropertyChanged("Url");
@@ -60,6 +61,24 @@ namespace GithubClient.Entity
             }
         }
 
+        [DataMember]
+        public string Content
+        {
+            get
+            {
+                return content;
+            }
+            set
+            {
+                if (value != content)
+                {
+                    content = value;
+                    NotifyPropertyChanged("Content");
+                }
+            }
+        }
+
+        [DataMember]
         public string Type
         {
             get
@@ -68,7 +87,7 @@ namespace GithubClient.Entity
             }
             set
             {
-                if (type != value)
+                if (value != type)
                 {
                     type = value;
                     NotifyPropertyChanged("Type");
@@ -76,18 +95,19 @@ namespace GithubClient.Entity
             }
         }
 
-        public string Icon
+        [DataMember]
+        public List<string> ContainsFiles
         {
             get
             {
-                return icon;
+                return containsFiles;
             }
             set
             {
-                if (icon != value)
+                if (value != containsFiles)
                 {
-                    icon = value;
-                    NotifyPropertyChanged("Icon");
+                    containsFiles = value;
+                    NotifyPropertyChanged("ContainsFiles");
                 }
             }
         }

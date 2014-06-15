@@ -57,6 +57,26 @@
             <!--Pivot item two-->
             <phone:PivotItem Header="Offline">
                 <Grid>
+                    <ListBox x:Name="OfflineRepositories" Grid.Row="1"
+                             ItemsSource="{Binding ElementName=AppRepositoryPage, Path=OfflineData}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Margin="8" Source="/Assets/Icons/repository.png"
+                                            Grid.Column="0"/>
+                                    <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center" FontSize="36"
+                                               HorizontalAlignment="Left" Grid.Column="1"
+                                               TextWrapping="Wrap"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
                     <TextBlock x:Name="NoOfflineItemsText" Text="No saved repositories available." VerticalAlignment="Center" HorizontalAlignment="Center" 
                                FontSize="26" TextWrapping="Wrap" Foreground="Gray" Visibility="Visible"/>
                 </Grid>

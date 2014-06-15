@@ -10,12 +10,14 @@ using Microsoft.Phone.Shell;
 using GithubClient.Utils;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using GithubClient.Entity;
 
 namespace GithubClient
 {
     public partial class RepositoryPage : PhoneApplicationPage
     {
         public ObservableCollection<Repository> Data { get; set; }
+        public ObservableCollection<DownloadedFile> OfflineData { get; set; }
 
         public RepositoryPage()
         {
@@ -28,6 +30,13 @@ namespace GithubClient
             else
             {
                 NoOnlineItemsText.Visibility = Visibility.Visible;
+            }
+            // read the offline repos from the storage.
+            OfflineData =  new ObservableCollection<DownloadedFile>(StorageUtils.GetAllRepos());
+            // if we have some offline repos, hide the no items text
+            if (OfflineData.Count > 0)
+            {
+                NoOfflineItemsText.Visibility = Visibility.Collapsed;
             }
         }
 

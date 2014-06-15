@@ -10,6 +10,7 @@ namespace GithubClient.Entity
     [JsonConverter(typeof(FileContentsConverter))]
     public class FileContents
     {
+        [JsonProperty("content")]
         public string Content { get; set; }
         public string Name { get; set; }
         public string Encoding { get; set; }

@@ -155,6 +155,7 @@ namespace GithubClient
 
             if (result == MessageBoxResult.OK)
             {
+                GitHubHttp.DownloadFilesRecursivelyFrom(Repository.Url + "/contents/", Repository.Name, true);
                 MessageBox.Show("Downloading in the background. A message will appear when done.");
             }
         }
