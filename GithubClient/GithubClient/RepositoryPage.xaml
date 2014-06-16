@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:tilteffect="clr-namespace:ControlTiltEffect"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -19,20 +20,20 @@
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
-                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardIn"/>
             </toolkit:NavigationInTransition.Backward>
             <toolkit:NavigationInTransition.Forward>
-                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardIn"/>
             </toolkit:NavigationInTransition.Forward>
         </toolkit:NavigationInTransition>
     </toolkit:TransitionService.NavigationInTransition>
     <toolkit:TransitionService.NavigationOutTransition>
         <toolkit:NavigationOutTransition>
             <toolkit:NavigationOutTransition.Backward>
-                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardOut"/>
             </toolkit:NavigationOutTransition.Backward>
             <toolkit:NavigationOutTransition.Forward>
-                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardOut"/>
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
@@ -44,8 +45,8 @@
             <!--Pivot item one-->
             <phone:PivotItem Header="Online">
                 <Grid>
-                    <ListBox x:Name="Repositories" Grid.Row="1" SelectionChanged="Repository_Selected"
-                             ItemsSource="{Binding ElementName=AppRepositoryPage, Path=Data}">
+                    <ListBox x:Name="Repositories" Grid.Row="1" SelectionChanged="Repository_Selected" tilteffect:TiltEffect.IsTiltEnabled="True"
+                             ItemsSource="{Binding ElementName=AppRepositoryPage, Path=Data}" toolkit:TurnstileFeatherEffect.FeatheringIndex="0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -82,8 +83,8 @@
             <!--Pivot item two-->
             <phone:PivotItem Header="Offline">
                 <Grid>
-                    <ListBox x:Name="OfflineRepositories" Grid.Row="1" SelectionChanged="Offline_Repository_Selected"
-                             ItemsSource="{Binding ElementName=AppRepositoryPage, Path=OfflineData}">
+                    <ListBox x:Name="OfflineRepositories" Grid.Row="1" SelectionChanged="Offline_Repository_Selected" tilteffect:TiltEffect.IsTiltEnabled="True"
+                             ItemsSource="{Binding ElementName=AppRepositoryPage, Path=OfflineData}" toolkit:TurnstileFeatherEffect.FeatheringIndex="0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>

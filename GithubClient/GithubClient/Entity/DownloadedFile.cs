@@ -112,6 +112,7 @@ namespace GithubClient.Entity
             }
         }
 
+        [DataMember]
         public string Icon { get; set; }
     }
 }

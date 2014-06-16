@@ -11,6 +11,8 @@ using GithubClient.Utils;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using GithubClient.Entity;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace GithubClient
 {
@@ -34,7 +36,15 @@ namespace GithubClient
             {
                 Data = new ObservableCollection<Repository>((List<Repository>)NavigationHelper.getData());
             }
-            
+            // if app was tombstoned, try to load the data from there.
+            if (Data == null && App.WasDormant == false)
+            {
+                string param = this.LoadState<string>("AuthHeader");
+                GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                Data = this.LoadState<ObservableCollection<Repository>>("Data");
+            }
+
+            // check if we have something to work with
             if (Data == null)
             {
                 NoOnlineItemsText.Visibility = Visibility.Visible;
@@ -61,6 +71,15 @@ namespace GithubClient
             {
                 NoOfflineItemsText.Visibility = Visibility.Visible;
             }
+        }
+        
+        /**
+         * Save the state of the page
+         */
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+            this.SaveState("Data", Data);
         }
 
         private void Repository_Selected(object sender, SelectionChangedEventArgs e)

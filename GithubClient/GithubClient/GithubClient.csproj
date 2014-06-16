@@ -124,7 +124,9 @@
     </Compile>
     <Compile Include="Utils\GitHubHttp.cs" />
     <Compile Include="Utils\NavigationHelper.cs" />
+    <Compile Include="Utils\StateManager.cs" />
     <Compile Include="Utils\StorageUtils.cs" />
+    <Compile Include="Utils\TiltEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

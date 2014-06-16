@@ -11,6 +11,7 @@ using GithubClient.Entity;
 using System.Collections.ObjectModel;
 using GithubClient.Utils;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace GithubClient
 {
@@ -21,19 +22,47 @@ namespace GithubClient
         private List<String> Parents { get; set; }
 
         public OfflineBrowsePage()
-        {            
+        {
             InitializeComponent();
-            Setup();
         }
 
-        private void Setup(){
+        private void Setup()
+        {
+            
+            
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
             Parents = new List<string>();
             CurrentItems = new ObservableCollection<DownloadedFile>();
-            DownloadedFile selectedRepo = (DownloadedFile)NavigationHelper.getData();
-            RepositoryName = selectedRepo.Name;
-            Parents.Add(selectedRepo.Url);
-            GetSubItemsForItem(selectedRepo);
+            if (NavigationHelper.hasData() && NavigationHelper.getDataType() == NavigationHelper.DataType.DOWNLOADED_FILE)
+            {
+                DownloadedFile selectedRepo = (DownloadedFile)NavigationHelper.getData();
+                RepositoryName = selectedRepo.Name;
+                Parents.Add(selectedRepo.Url);
+                GetSubItemsForItem(selectedRepo);
             }
+            else if (!App.WasDormant)
+            {
+                Debugger.Log(0,"","TOMBSTONE");
+                string param = this.LoadState<string>("AuthHeader");
+                GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                Parents = this.LoadState<List<String>>("Parents");
+                CurrentItems = this.LoadState<ObservableCollection<DownloadedFile>>("CurrentItems");
+                RepositoryName = this.LoadState<string>("RepositoryName");
+            }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+            this.SaveState("Parents", Parents);
+            this.SaveState("CurrentItems", CurrentItems);
+            this.SaveState("RepositoryName", RepositoryName);
+        }
+
+
 
         /**
  * Add an "up one directory" item to the list, if going up is possible.
@@ -106,7 +135,7 @@ namespace GithubClient
             {
                 return;
             }
-            
+
             DownloadedFile selectedFile = CurrentItems.ElementAt(index);
             if (selectedFile.Type.Equals("UP"))
             {

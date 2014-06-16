@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:tilteffect="clr-namespace:ControlTiltEffect"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -19,20 +20,20 @@
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
-                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardIn"/>
             </toolkit:NavigationInTransition.Backward>
             <toolkit:NavigationInTransition.Forward>
-                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardIn"/>
             </toolkit:NavigationInTransition.Forward>
         </toolkit:NavigationInTransition>
     </toolkit:TransitionService.NavigationInTransition>
     <toolkit:TransitionService.NavigationOutTransition>
         <toolkit:NavigationOutTransition>
             <toolkit:NavigationOutTransition.Backward>
-                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardOut"/>
             </toolkit:NavigationOutTransition.Backward>
             <toolkit:NavigationOutTransition.Forward>
-                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardOut"/>
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
@@ -47,12 +48,14 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="BROWSE OFFLINE" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="{Binding ElementName=AppOfflineBrowsePage, Path=RepositoryName}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="{Binding ElementName=AppOfflineBrowsePage, Path=RepositoryName}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" TextTrimming="WordEllipsis"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid Grid.Row="1">
-            <ListBox x:Name="Files" Grid.Row="1" ItemsSource="{Binding ElementName=AppOfflineBrowsePage, Path=CurrentItems}" SelectionChanged="OnItemSelected">
+            <ListBox x:Name="Files" Grid.Row="1" ItemsSource="{Binding ElementName=AppOfflineBrowsePage, Path=CurrentItems}"
+                     SelectionChanged="OnItemSelected" toolkit:TurnstileFeatherEffect.FeatheringIndex="0"
+                     tilteffect:TiltEffect.IsTiltEnabled="True">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Height="72">
