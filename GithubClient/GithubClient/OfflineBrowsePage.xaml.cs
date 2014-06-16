@@ -26,12 +26,6 @@ namespace GithubClient
             InitializeComponent();
         }
 
-        private void Setup()
-        {
-            
-            
-        }
-
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             Parents = new List<string>();
@@ -45,28 +39,30 @@ namespace GithubClient
             }
             else if (!App.WasDormant)
             {
-                Debugger.Log(0,"","TOMBSTONE");
+                // get the data from the state, because the app was tombstoned.
                 string param = this.LoadState<string>("AuthHeader");
                 GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
-                Parents = this.LoadState<List<String>>("Parents");
-                CurrentItems = this.LoadState<ObservableCollection<DownloadedFile>>("CurrentItems");
-                RepositoryName = this.LoadState<string>("RepositoryName");
+                Parents = this.LoadState<List<String>>("OfflineParents");
+                CurrentItems = this.LoadState<ObservableCollection<DownloadedFile>>("OfflineCurrentItems");
+                RepositoryName = this.LoadState<string>("OfflineRepositoryName");
             }
         }
 
+        /**
+         * Save the state of the page, in case we need to retrieve it when being tombstoned.
+         */
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
-            this.SaveState("Parents", Parents);
-            this.SaveState("CurrentItems", CurrentItems);
-            this.SaveState("RepositoryName", RepositoryName);
+            this.SaveState("OfflineParents", Parents);
+            this.SaveState("OfflineCurrentItems", CurrentItems);
+            this.SaveState("OfflineRepositoryName", RepositoryName);
         }
 
 
-
         /**
- * Add an "up one directory" item to the list, if going up is possible.
- */
+         * Add an "up one directory" item to the list, if going up is possible.
+         */
         private void AddUpActionIfNeeded()
         {
             if (Parents.Count > 1)
