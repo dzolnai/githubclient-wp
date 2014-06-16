@@ -24,6 +24,17 @@ namespace GithubClient
             InitializeComponent();
         }
 
+        /**
+         * User can't go back from login screen.
+         */
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.RemoveBackEntry();
+            }
+        }
+
         private async void Login_Button_Click(object sender, RoutedEventArgs e)
         {
             string userEmail = email.Text;
