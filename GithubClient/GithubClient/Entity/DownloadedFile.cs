@@ -111,5 +111,7 @@ namespace GithubClient.Entity
                 }
             }
         }
+
+        public string Icon { get; set; }
     }
 }

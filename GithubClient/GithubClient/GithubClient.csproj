@@ -110,6 +110,9 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OfflineBrowsePage.xaml.cs">
+      <DependentUpon>OfflineBrowsePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryPage.xaml.cs">
       <DependentUpon>RepositoryPage.xaml</DependentUpon>
@@ -140,6 +143,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="OfflineBrowsePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RepositoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,6 +166,7 @@
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Icons\delete.png" />
     <Content Include="Assets\Icons\directory-dark.png" />
     <Content Include="Assets\Icons\directory-light.png" />
     <Content Include="Assets\Icons\file-dark.png" />

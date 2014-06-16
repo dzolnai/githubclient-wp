@@ -22,17 +22,25 @@ namespace GithubClient
         public RepositoryPage()
         {
             InitializeComponent();         
+            
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            // user can't go back to the login screen
+            NavigationService.RemoveBackEntry();
             // in online mode, this should be set
             if (NavigationHelper.hasData() && NavigationHelper.getDataType() == GithubClient.Utils.NavigationHelper.DataType.REPOSITORY_LIST)
             {
                 Data = new ObservableCollection<Repository>((List<Repository>)NavigationHelper.getData());
-            } 
-            else
+            }
+            
+            if (Data == null)
             {
                 NoOnlineItemsText.Visibility = Visibility.Visible;
             }
             // read the offline repos from the storage.
-            OfflineData =  new ObservableCollection<DownloadedFile>(StorageUtils.GetAllRepos());
+            OfflineData = new ObservableCollection<DownloadedFile>(StorageUtils.GetAllRepos());
             // if we have some offline repos, hide the no items text
             if (OfflineData.Count > 0)
             {
@@ -40,19 +48,31 @@ namespace GithubClient
             }
         }
 
-        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            // user can't go back to the login screen
-            NavigationService.RemoveBackEntry();
-        }
-
         private void Repository_Selected(object sender, SelectionChangedEventArgs e)
         {
             int Index = Repositories.SelectedIndex;
+            if (Index < 0)
+            {
+                return;
+            }
             Repository selectedRepo = Data.ElementAt(Index);
             NavigationHelper.setNavigationData(selectedRepo, NavigationHelper.DataType.REPOSITORY);
+            Repositories.SelectedIndex = -1; 
             NavigationService.Navigate(new Uri("/BrowsePage.xaml", UriKind.Relative));
-            Debugger.Log(0, "Data", selectedRepo.Url + "\n");
+        }
+
+        private void Offline_Repository_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            int Index = OfflineRepositories.SelectedIndex;
+            if (Index < 0)
+            {
+                return;
+            }
+            DownloadedFile selectedRepo = OfflineData.ElementAt(Index);
+            NavigationHelper.setNavigationData(selectedRepo, NavigationHelper.DataType.DOWNLOADED_FILE);
+            OfflineRepositories.SelectedIndex = -1;
+            NavigationService.Navigate(new Uri("/OfflineBrowsePage.xaml", UriKind.Relative));
+            
         }
     }
 }

@@ -58,6 +58,7 @@ namespace GithubClient
                 CurrentItems.Add(goUp);
             }
         }
+
         /**
          * Download the items, and put them into the new items array.
          * The collection updates the listbox, thus new items are displayed.

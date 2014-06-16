@@ -49,7 +49,7 @@ namespace GithubClient.Utils
          */
         private static void SaveFileToDirectory(DownloadedFile file, string directory)
         {
-            string fileName = GetFileName(file);
+            string fileName = GetFileName(file.Url);
             string path = String.Format("{0}/{1}.dat", directory, fileName);
             if (!IsoFile.DirectoryExists(directory))
             {
@@ -70,7 +70,9 @@ namespace GithubClient.Utils
             }
         }
 
-
+        /**
+         * Get the files for all the repos stored on the isolated storage.
+         */
         public static List<DownloadedFile> GetAllRepos()
         {
             List<DownloadedFile> result = new List<DownloadedFile>();
@@ -94,11 +96,39 @@ namespace GithubClient.Utils
         }
 
         /**
+         * Get a file by its URL on the isolated storage
+         */
+        public static DownloadedFile GetFileByUrl(string url)
+        {
+            string fileName = GetFileName(url) + ".dat";
+            Debugger.Log(0, "Data", "Getting: " + fileName + "\n");
+            if (!IsoFile.DirectoryExists("files") || !IsoFile.FileExists("files\\" + fileName))
+            {
+                // it might be a repo
+                if (!IsoFile.DirectoryExists("repos") || !IsoFile.FileExists("repos\\" + fileName))
+                {
+                    return null;
+                }
+                else
+                {
+                    using (var sourceStream = IsoFile.OpenFile("repos\\" + fileName, FileMode.Open))
+                    {
+                        return (DownloadedFile)fileSerializer.ReadObject(sourceStream);
+                    }
+                }
+            }
+            using (var sourceStream = IsoFile.OpenFile("files\\" + fileName, FileMode.Open))
+            {
+                return (DownloadedFile)fileSerializer.ReadObject(sourceStream);
+            }
+        }
+
+        /**
          * Converts the filename to a storage-compatible one.
          */
-        private static string GetFileName(DownloadedFile file)
+        private static string GetFileName(string url)
         {
-            string name = file.Url;
+            string name = url;
             name = name.Replace("/", "_");
             name = name.Replace("\\", "_");
             name = name.Replace("=", "_");

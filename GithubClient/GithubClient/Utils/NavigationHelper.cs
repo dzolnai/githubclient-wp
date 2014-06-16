@@ -13,7 +13,7 @@ namespace GithubClient.Utils
 
         public enum DataType
         {
-            REPOSITORY_LIST, REPOSITORY, FILE, NONE
+            REPOSITORY_LIST, REPOSITORY, FILE, DOWNLOADED_FILE, NONE
         }
 
         public static void setNavigationData(Object data, DataType type){

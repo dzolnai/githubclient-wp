@@ -59,7 +59,7 @@
             <!--Pivot item two-->
             <phone:PivotItem Header="Offline">
                 <Grid>
-                    <ListBox x:Name="OfflineRepositories" Grid.Row="1"
+                    <ListBox x:Name="OfflineRepositories" Grid.Row="1" SelectionChanged="Offline_Repository_Selected"
                              ItemsSource="{Binding ElementName=AppRepositoryPage, Path=OfflineData}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
