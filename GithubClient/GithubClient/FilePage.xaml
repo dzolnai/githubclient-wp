@@ -47,7 +47,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="VIEW FILE" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="{Binding ElementName=AppFilePage, Path=File.Name}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="{Binding ElementName=AppFilePage, Path=File.Name}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" TextTrimming="WordEllipsis"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->

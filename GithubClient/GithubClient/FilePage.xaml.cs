@@ -12,6 +12,7 @@ using GithubClient.Utils;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace GithubClient
 {
@@ -21,8 +22,34 @@ namespace GithubClient
 
         public FilePage()
         {
-            File = (FileContents)NavigationHelper.getData();
             InitializeComponent();
+        }
+
+        /**
+ * Set up the page, get the data from the state if needed
+ */
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (NavigationHelper.hasData() && NavigationHelper.getDataType() == NavigationHelper.DataType.FILE)
+            {
+                File = (FileContents)NavigationHelper.getData();
+            }
+            else if (!App.WasDormant)
+            {
+                // get the data from the state, because the app was tombstoned.
+                string param = this.LoadState<string>("AuthHeader");
+                GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                File = this.LoadState<FileContents>("File");
+            }
+        }
+
+        /**
+         * Save the state of the page, in case we need to retrieve it when being tombstoned.
+         */
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+            this.SaveState("File", File);
         }
 
         private void OnBrowserLoaded(object sender, RoutedEventArgs e)
