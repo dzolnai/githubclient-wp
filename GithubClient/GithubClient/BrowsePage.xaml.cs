@@ -122,6 +122,7 @@ namespace GithubClient
                 // type is a file, we download and open it
                 DownloadFile(selectedFile);
             }
+            Files.SelectedIndex = -1;
         }
 
         private async void DownloadFile(File file)

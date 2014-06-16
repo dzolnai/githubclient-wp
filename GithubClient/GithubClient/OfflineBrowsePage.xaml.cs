@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using GithubClient.Entity;
 using System.Collections.ObjectModel;
 using GithubClient.Utils;
+using System.Diagnostics;
 
 namespace GithubClient
 {
@@ -105,6 +106,7 @@ namespace GithubClient
             {
                 return;
             }
+            
             DownloadedFile selectedFile = CurrentItems.ElementAt(index);
             if (selectedFile.Type.Equals("UP"))
             {
@@ -113,15 +115,21 @@ namespace GithubClient
                 DownloadedFile fileToLoad = StorageUtils.GetFileByUrl(urlToGet);
                 GetSubItemsForItem(fileToLoad);
             }
-            if (selectedFile.Type.Equals("dir"))
+            else if (selectedFile.Type.Equals("dir"))
             {
                 Parents.Add(selectedFile.Url);
                 GetSubItemsForItem(selectedFile);
             }
             else
             {
-                // TODO convert and view item
+                FileContents convertedContents = new FileContents();
+                convertedContents.Content = selectedFile.Content;
+                convertedContents.Name = selectedFile.Name;
+                convertedContents.Url = selectedFile.Url;
+                NavigationHelper.setNavigationData(convertedContents, NavigationHelper.DataType.FILE);
+                NavigationService.Navigate(new Uri("/FilePage.xaml", UriKind.Relative));
             }
+            Files.SelectedIndex = -1;
         }
     }
 }
