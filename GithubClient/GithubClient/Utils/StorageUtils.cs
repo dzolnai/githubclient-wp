@@ -123,6 +123,38 @@ namespace GithubClient.Utils
             }
         }
 
+        public static void DeleteFilesFromRoot(DownloadedFile root)
+        {
+            if (root.ContainsFiles != null)
+            {
+                foreach (string url in root.ContainsFiles)
+                {
+                    DownloadedFile subFile = GetFileByUrl(url);
+                    DeleteFilesFromRoot(subFile);
+                }
+                // delete this file
+                string fileName = GetFileName(root.Url) + ".dat";
+                if (!IsoFile.DirectoryExists("files") || !IsoFile.FileExists("files\\" + fileName))
+                {
+                    // it might be a repo
+                    if (!IsoFile.DirectoryExists("repos") || !IsoFile.FileExists("repos\\" + fileName))
+                    {
+                        // Don't do anything
+                        return;
+                    }
+                    else
+                    {
+                        IsoFile.DeleteFile("repos\\" + fileName);
+                        return;
+                    }
+                }
+                // if it exists, delete it.
+                IsoFile.DeleteFile("files\\" + fileName);
+                return;
+
+            }
+        }
+
         /**
          * Converts the filename to a storage-compatible one.
          */

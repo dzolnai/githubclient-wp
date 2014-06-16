@@ -40,11 +40,26 @@ namespace GithubClient
                 NoOnlineItemsText.Visibility = Visibility.Visible;
             }
             // read the offline repos from the storage.
-            OfflineData = new ObservableCollection<DownloadedFile>(StorageUtils.GetAllRepos());
+            if (OfflineData == null)
+            {
+                OfflineData = new ObservableCollection<DownloadedFile>(StorageUtils.GetAllRepos());
+            }
+            else
+            {
+                OfflineData.Clear();
+                foreach (var item in StorageUtils.GetAllRepos())
+                {
+                    OfflineData.Add(item);
+                }
+            }
             // if we have some offline repos, hide the no items text
             if (OfflineData.Count > 0)
             {
                 NoOfflineItemsText.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                NoOfflineItemsText.Visibility = Visibility.Visible;
             }
         }
 

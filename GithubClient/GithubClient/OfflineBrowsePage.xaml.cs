@@ -85,7 +85,17 @@ namespace GithubClient
          */
         private void DeleteRepo(object sender, EventArgs e)
         {
-            // TODO
+            MessageBoxResult result = MessageBox.Show("Are your sure you want to delete this repository from your local storage?",
+                                                      RepositoryName, MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+            {
+                string urlToGet = Parents.ElementAt(0);
+                DownloadedFile repoRoot = StorageUtils.GetFileByUrl(urlToGet);
+                StorageUtils.DeleteFilesFromRoot(repoRoot);
+                MessageBox.Show("Repository deleted.");
+                NavigationService.GoBack();
+            }
         }
 
         private void OnItemSelected(object sender, SelectionChangedEventArgs e)
@@ -110,7 +120,7 @@ namespace GithubClient
             }
             else
             {
-                // TODO view item
+                // TODO convert and view item
             }
         }
     }
