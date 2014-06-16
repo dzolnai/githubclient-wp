@@ -40,7 +40,10 @@ namespace GithubClient
             if (Data == null && App.WasDormant == false)
             {
                 string param = this.LoadState<string>("AuthHeader");
-                GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                if (param != null)
+                {
+                    GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                }
                 Data = this.LoadState<ObservableCollection<Repository>>("Data");
             }
 
@@ -78,7 +81,10 @@ namespace GithubClient
          */
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+            if (GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization != null)
+            {
+                this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+            }
             this.SaveState("Data", Data);
         }
 
@@ -107,6 +113,12 @@ namespace GithubClient
             OfflineRepositories.SelectedIndex = -1;
             NavigationService.Navigate(new Uri("/OfflineBrowsePage.xaml", UriKind.Relative));
             
+        }
+
+        private void OnLogoutClick(object sender, EventArgs e)
+        {
+            GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = null;
+            NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
         }
     }
 }

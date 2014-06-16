@@ -38,7 +38,10 @@ namespace GithubClient
             {
                 // get the data from the state, because the app was tombstoned.
                 string param = this.LoadState<string>("AuthHeader");
-                GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                if (param != null)
+                {
+                    GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                }
                 File = this.LoadState<FileContents>("File");
             }
         }
@@ -48,7 +51,10 @@ namespace GithubClient
          */
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+            if (GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization != null)
+            {
+                this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+            }
             this.SaveState("File", File);
         }
 

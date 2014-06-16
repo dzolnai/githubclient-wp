@@ -47,7 +47,10 @@ namespace GithubClient
             {
                 // get the data from the state, because the app was tombstoned.
                 string param = this.LoadState<string>("AuthHeader");
-                GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                if (param != null)
+                {
+                    GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", param);
+                }
                 Parents = this.LoadState<List<String>>("OnlineParents");
                 CurrentItems = this.LoadState<ObservableCollection<File>>("OnlineCurrentItems");
                 Repository = this.LoadState<Repository>("OnlineRepository");
@@ -57,9 +60,11 @@ namespace GithubClient
         /**
          * Save the state of the page, in case we need to retrieve it when being tombstoned.
          */
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+        protected override void OnNavigatedFrom(NavigationEventArgs e){
+            if (GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization != null)
+            {
+                this.SaveState("AuthHeader", GitHubHttp.GetHttpClient().DefaultRequestHeaders.Authorization.Parameter);
+            }
             this.SaveState("OnlineParents", Parents);
             this.SaveState("OnlineCurrentItems", CurrentItems);
             this.SaveState("OnlineRepository", Repository);

@@ -173,6 +173,7 @@
     <Content Include="Assets\Icons\directory-light.png" />
     <Content Include="Assets\Icons\file-dark.png" />
     <Content Include="Assets\Icons\file-light.png" />
+    <Content Include="Assets\Icons\logout.png" />
     <Content Include="Assets\Icons\repository-dark.png" />
     <Content Include="Assets\Icons\repository-light.png" />
     <Content Include="Assets\Icons\save.png" />
