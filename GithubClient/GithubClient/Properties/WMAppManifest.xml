@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{cf23520f-2ec4-4ca5-9fa9-14f7c827fcab}" Title="GithubClient" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="GithubClient author" Description="Sample description" Publisher="GithubClient" PublisherID="{63857423-9b63-4a08-b4ce-da3094a066ee}">
+  <App xmlns="" ProductID="{cf23520f-2ec4-4ca5-9fa9-14f7c827fcab}" Title="Persistence" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="GithubClient author" Description="With this app you can browse in your GitHub repositories, or you can even save them for offline use!" Publisher="GithubClient" PublisherID="{63857423-9b63-4a08-b4ce-da3094a066ee}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -19,7 +19,7 @@
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>GithubClient</Title>
+          <Title>Persistence</Title>
           <BackContent>
           </BackContent>
           <BackBackgroundImageURI>

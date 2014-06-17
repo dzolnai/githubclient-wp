@@ -26,7 +26,7 @@ namespace GithubClient
 
         /**
          * User can't go back from login screen.
-         */
+         */ 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             if (NavigationService.CanGoBack)
