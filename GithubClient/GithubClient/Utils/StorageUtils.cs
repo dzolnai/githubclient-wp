@@ -102,29 +102,41 @@ namespace GithubClient.Utils
         {
             string fileName = GetFileName(url) + ".dat";
             Debugger.Log(0, "Data", "Getting: " + fileName + "\n");
-            if (!IsoFile.DirectoryExists("files") || !IsoFile.FileExists("files\\" + fileName))
+            try
             {
-                // it might be a repo
-                if (!IsoFile.DirectoryExists("repos") || !IsoFile.FileExists("repos\\" + fileName))
+                if (!IsoFile.DirectoryExists("files") || !IsoFile.FileExists("files\\" + fileName))
                 {
-                    return null;
-                }
-                else
-                {
-                    using (var sourceStream = IsoFile.OpenFile("repos\\" + fileName, FileMode.Open))
+                    // it might be a repo
+                    if (!IsoFile.DirectoryExists("repos") || !IsoFile.FileExists("repos\\" + fileName))
                     {
-                        return (DownloadedFile)fileSerializer.ReadObject(sourceStream);
+                        return null;
+                    }
+                    else
+                    {
+                        using (var sourceStream = IsoFile.OpenFile("repos\\" + fileName, FileMode.Open))
+                        {
+                            return (DownloadedFile)fileSerializer.ReadObject(sourceStream);
+                        }
                     }
                 }
+                using (var sourceStream = IsoFile.OpenFile("files\\" + fileName, FileMode.Open))
+                {
+                    return (DownloadedFile)fileSerializer.ReadObject(sourceStream);
+                }
             }
-            using (var sourceStream = IsoFile.OpenFile("files\\" + fileName, FileMode.Open))
+            catch (PathTooLongException ex)
             {
-                return (DownloadedFile)fileSerializer.ReadObject(sourceStream);
+                return null;
             }
         }
 
         public static void DeleteFilesFromRoot(DownloadedFile root)
         {
+            if (root == null)
+            {
+                Debugger.Log(0, "Data", "Can't delete file!");
+                return;
+            }
             if (root.ContainsFiles != null)
             {
                 foreach (string url in root.ContainsFiles)
